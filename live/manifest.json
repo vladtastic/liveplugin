@@ -13,11 +13,20 @@
 
     "background" :
     {
-        "scripts" : ["eventPage.js"],
+        "scripts" : ["eventPage.js","jquery-1.12.1.js"],
         "persistent" : false
     },
 
+    "content_scripts" : [
+        {
+            "matches":["https://www.youtube.com/watch?v=PsO6ZnUZI0g"],
+            "js":["live_cs.js","jquery-1.12.1.js"],
+            "css" : ["youtube.css"]
+        }
+    ],
+
     "permissions" :[
-        "tabs"   
+        "tabs",
+        "https://www.youtube.com/watch?v=PsO6ZnUZI0g"   
     ]
 }
