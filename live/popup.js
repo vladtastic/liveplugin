@@ -4,6 +4,13 @@ function setDOMInfo(info) {
   document.getElementById('artistName').textContent   = trimArtist;
   //document.getElementById('inputs').textContent  = info.inputs;
   //document.getElementById('buttons').textContent = info.buttons;
+  //updateArtistInfo(trimArtist);
+  var resp = $.getJSON("http://api.songkick.com/api/3.0/search/artists.json",{query:trimArtist,apikey:"PK2781I3XauJ6wS1"},
+    function(data){
+      // unpack the JSON response
+      var artistID = extractSKArtistID(data);
+      setArtistPhoto(artistID);
+    });
 }
 
 // Once the DOM is ready...
@@ -22,3 +29,14 @@ window.addEventListener('DOMContentLoaded', function () {
         setDOMInfo);
   });
 });
+
+function extractSKArtistID(data){
+  console.log(data.resultsPage.results.artist[0].id);
+  return artistID = data.resultsPage.results.artist[0].id; 
+}
+
+function setArtistPhoto(artistID)
+{
+  image = document.getElementById('artistPhoto');
+  image.src = "http://images.sk-static.com/images/media/profile_images/artists/" + artistID +"/large_avatar";
+}

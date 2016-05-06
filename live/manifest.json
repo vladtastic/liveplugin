@@ -27,6 +27,7 @@
 
     "permissions" :[
         "tabs",
-        "https://www.youtube.com/watch?v=PsO6ZnUZI0g"   
+        "https://www.youtube.com/watch?v=PsO6ZnUZI0g",
+        "http://api.songkick.com/api/*"   
     ]
 }
