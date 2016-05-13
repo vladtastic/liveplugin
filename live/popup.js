@@ -8,8 +8,13 @@ function setDOMInfo(info) {
   var resp = $.getJSON("http://api.songkick.com/api/3.0/search/artists.json",{query:trimArtist,apikey:"PK2781I3XauJ6wS1"},
     function(data){
       // unpack the JSON response
-      var artistID = extractSKArtistID(data);
-      setArtistPhoto(artistID);
+
+      //old stuff
+      //var artistID = extractSKArtistID(data);
+      //setArtistPhoto(artistID);
+
+      unpackJSON(data);
+
     });
 }
 
@@ -35,8 +40,69 @@ function extractSKArtistID(data){
   return artistID = data.resultsPage.results.artist[0].id; 
 }
 
+function unpackJSON(data){
+
+  console.log("Unpacking JSON");
+
+  var innerResults = data.resultsPage.results.artist[0];
+
+  extractArtistID(innerResults, setArtistPhoto );
+
+  extractDisplayName(innerResults, setArtistName );
+
+}
+
+function extractArtistID( data, callback )
+{
+  if( callback && typeof(callback) === "function" )
+  {
+      return callback(data.id);
+  }
+
+  else
+  {
+    alert(typeof(callback));
+  }
+
+}
+
+function extractDisplayName( data, callback )
+{
+  if( callback && typeof(callback) === "function" )
+  {
+      return callback(data.displayName);
+  }
+
+  else
+  {
+    alert(typeof(callback));
+  }
+}
+
+function extractTourEndDate(data)
+{
+  return data.OnTourUntil;
+}
+
+function extractURI(data)
+{
+  return data.uri;
+}
+
+function extractIdentifier(data)
+{
+  //extract the different identifiers from data.identifier[0]
+}
+
+
+
 function setArtistPhoto(artistID)
 {
   image = document.getElementById('artistPhoto');
   image.src = "http://images.sk-static.com/images/media/profile_images/artists/" + artistID +"/large_avatar";
+}
+
+function setArtistName(artistName)
+{
+  document.getElementById('artistName').textContent = artistName;
 }
